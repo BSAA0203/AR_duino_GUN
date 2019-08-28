@@ -22,7 +22,7 @@ public class Monster_Spawn : MonoBehaviour
 
     void spwan()
     {
-        float spawn_x = Random.Range(-23f, 19f);
+        //float spawn_x = Random.Range(-23f, 19f);
         Debug.Log("New Spawn!");
         GameObject clone_monster = (GameObject)Instantiate(origin,here.position,here.rotation);
     }
