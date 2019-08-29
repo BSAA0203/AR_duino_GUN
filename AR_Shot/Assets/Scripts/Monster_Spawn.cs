@@ -11,7 +11,7 @@ public class Monster_Spawn : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        InvokeRepeating("spwan", 3, 1);
+        InvokeRepeating("spwan", 10, 1);
     }
 
     // Update is called once per frame
@@ -22,8 +22,8 @@ public class Monster_Spawn : MonoBehaviour
 
     void spwan()
     {
-        //float spawn_x = Random.Range(-23f, 19f);
+        float spawn_x = Random.Range(-23f, 20f);
         Debug.Log("New Spawn!");
-        GameObject clone_monster = (GameObject)Instantiate(origin,here.position,here.rotation);
+        GameObject clone_monster = (GameObject)Instantiate(origin,new Vector3(spawn_x,here.position.y,here.position.z),here.rotation);
     }
 }

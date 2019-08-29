@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour {
 
-    float tt = 30f; // get 30sec
+    float tt = 60f; // get 30sec
     Text txt;
 
     // Use this for initialization

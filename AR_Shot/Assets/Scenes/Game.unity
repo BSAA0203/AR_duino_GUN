@@ -453,7 +453,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: TIME
 --- !u!222 &1047637578
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -624,7 +624,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: SCORE
 --- !u!222 &1661821994
 CanvasRenderer:
   m_ObjectHideFlags: 0
