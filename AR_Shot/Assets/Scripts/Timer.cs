@@ -5,11 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour {
 
-    float tt = 30f;
+    float tt = 30f; // get 30sec
     Text txt;
+
     // Use this for initialization
     void Start () {
-        txt = GetComponent<Text>();
+        txt = GetComponent<Text>(); // get text
 	}
 	
 	// Update is called once per frame

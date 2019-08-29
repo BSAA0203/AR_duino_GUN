@@ -11,7 +11,7 @@ public class Monster_Spawn : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        InvokeRepeating("spwan", 3, 3);
+        InvokeRepeating("spwan", 3, 1);
     }
 
     // Update is called once per frame

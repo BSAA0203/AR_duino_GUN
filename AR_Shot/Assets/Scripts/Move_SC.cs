@@ -9,11 +9,11 @@ public class Move_SC : MonoBehaviour {
 	
     public void Search()
     {
-        SceneManager.LoadScene("Search");
+        SceneManager.LoadScene("Search"); // go to Search Scene
     }
 
     public void Game()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Game"); //go to Game Scene
     }
 }

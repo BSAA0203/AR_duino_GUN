@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 301580718}
   - component: {fileID: 301580717}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Cross_hair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explo: {fileID: 100006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 2}
   cross: {fileID: 71168721}
-  score: 0
+  txt: {fileID: 1661821993}
 --- !u!114 &301580718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

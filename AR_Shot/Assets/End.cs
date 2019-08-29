@@ -4,15 +4,15 @@ using UnityEngine;
 using TMPro;
 
 public class End : MonoBehaviour {
-    TextMeshPro txt;
+    TextMeshProUGUI txt;
 
 	// Use this for initialization
 	void Start () {
-        txt = GetComponent<TextMeshPro>();
+        txt = GetComponent<TextMeshProUGUI>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        txt.text = Shot.score.ToString();
+        txt.text = "Score : "+Shot.score.ToString();
 	}
 }

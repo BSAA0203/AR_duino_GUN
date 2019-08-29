@@ -10,22 +10,22 @@ public class Monster : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        target = GameObject.Find("ARCore Device");
+        target = GameObject.Find("ARCore Device"); // get target name
 	}
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(target.transform);
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+        transform.LookAt(target.transform); // only look target
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime); // go foward target
     }
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player") // if 
         {
             Debug.Log("BOMB!");
-            SceneManager.LoadScene("End");
+            SceneManager.LoadScene("End"); // go to End scene
         }
     }
 }
