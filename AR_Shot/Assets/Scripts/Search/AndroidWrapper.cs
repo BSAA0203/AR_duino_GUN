@@ -63,14 +63,15 @@ public class AndroidWrapper : MonoBehaviour
 		try 
 		{
 			if(bluetoothEnabled) {
-				List<PairedDeviceModel> pairedDeviceList = this.getPairedDevices(this.androidJavaObject);
-				this.message.text = "paired device list size: " + pairedDeviceList.Count;
-				if(pairedDeviceList == null) {
-					this.message.text = "Empty";
+				string pairedDeviceListStr = this.getPairedDevices(this.androidJavaObject);
+				this.message.text = pairedDeviceListStr;
+				Debug.Log("paired list:" + this.message.text);
+				PairedDevicesListModel pairedDeviceList = JsonUtility.FromJson<PairedDevicesListModel>(pairedDeviceListStr);
+				Debug.Log("list?: " + (pairedDeviceList != null));
+				if(pairedDeviceList.devices == null) {
+					pairedDeviceList.devices = new List<PairedDeviceModel>();
 				}
-				else {
-				this.message.text = pairedDeviceList.ToString();
-				}
+				this.message.text = "Json parsed list size: " + pairedDeviceList.devices.Count;
 			}
 		}
         catch (UnityException e)
@@ -95,8 +96,8 @@ public class AndroidWrapper : MonoBehaviour
 		return activity.Call<bool>("toggleBluetooth", true);
 	}
 
-	List<PairedDeviceModel> getPairedDevices(AndroidJavaObject activity) {
-		return activity.Call<List<PairedDeviceModel>>("getPairedDevices");
+	string getPairedDevices(AndroidJavaObject activity) {
+		return activity.Call<string>("getPairedDevices");
 	}
 
     // Update is called once per frame

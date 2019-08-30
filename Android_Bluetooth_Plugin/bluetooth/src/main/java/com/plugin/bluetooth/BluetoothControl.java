@@ -9,6 +9,8 @@ import android.util.Log;
 import com.plugin.bluetooth.model.BluetoothDeviceModel;
 //import com.plugin.bluetooth.model.BluetoothDevices;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -52,20 +54,27 @@ public class BluetoothControl {
         return this.bluetoothAdapter != null ? this.bluetoothAdapter.isEnabled() : false;
     }
 
-    public List<BluetoothDeviceModel> getPairedDevices() {
+    public String getPairedDevices() {
         if(this.bluetoothAdapter == null || !this.bluetoothAdapter.isEnabled()) {
             return null;
         }
-        List<BluetoothDeviceModel> pairedDevices = new ArrayList<BluetoothDeviceModel>();
+        String data = "{\"devices\":[";
+//        List<BluetoothDeviceModel> pairedDevices = new ArrayList<BluetoothDeviceModel>();
         for(BluetoothDevice device : this.bluetoothAdapter.getBondedDevices()) {
-            BluetoothDeviceModel deviceModel = new BluetoothDeviceModel();
-            deviceModel.address = device.getAddress();
-            deviceModel.name = device.getName();
+//            BluetoothDeviceModel deviceModel = new BluetoothDeviceModel();
+//            deviceModel.address = device.getAddress();
+//            deviceModel.name = device.getName();
+//
+//            pairedDevices.add(deviceModel);
+            data += "{\"address\":\"" + device.getAddress();
+            data += "\",\"name\":\"" + device.getName() + "\"},";
 
-            pairedDevices.add(deviceModel);
         }
-
-        return pairedDevices;
+        data = data.substring(0, data.length() - 1);
+        data +="]}";
+//        String data = pairedDevices.toString();
+        Log.d(TAG, data);
+        return data;
     }
 
     public String init() {
