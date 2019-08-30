@@ -31,8 +31,8 @@ public class BluetoothControl {
         }
         if(state) {
             this.bluetoothAdapter.enable();
-            Intent i = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            activity.startActivityForResult(i, REQUEST_ENABLE_BT);
+//            Intent i = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//            activity.startActivityForResult(i, REQUEST_ENABLE_BT);
         }
         else {
             this.bluetoothAdapter.disable();
