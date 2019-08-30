@@ -1,2 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.plugin.bluetooth" />
+    package="com.plugin.bluetooth"
+
+    >
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <permission android:name="android.permission.BLUETOOTH" android:label="BLUETOOTH"/>
+    <permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+</manifest>
