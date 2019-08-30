@@ -35,7 +35,7 @@ public class BluetoothConnectionThread extends Thread {
     public void run() {
 
         Log.d(TAG, "run thread started");
-        byte[] buffer = new byte[5];  // buffer store for the stream
+        byte[] buffer = new byte[6];  // buffer store for the stream
         int bytes; // bytes returned from read()
         while(this.running) {
             try {
