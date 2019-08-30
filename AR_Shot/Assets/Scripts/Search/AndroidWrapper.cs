@@ -25,6 +25,15 @@ public class AndroidWrapper : MonoBehaviour {
 		this.androidJavaObject.Call("setActivity", activity);
 
 		this.message.text = this.androidJavaObject.Call<string>("init");
+
+		if(this.message.text == "initialized") {
+			if(this.androidJavaObject.Call<bool>("getDeviceBluetoothState")) {
+				this.message.text = "Bluetooth not turned on";
+			}
+			else {
+				this.message.text = "Bluetooth already turned on";
+			}
+		}
 	}
 	
 	// Update is called once per frame
