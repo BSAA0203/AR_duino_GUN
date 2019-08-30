@@ -51,9 +51,12 @@ public class BluetoothConnectionThread extends Thread {
                 SystemClock.sleep(100);
             }
             catch (Exception e) {
+                this.running = false;
                 Log.e(TAG,"run: " + e.getMessage());
             }
         }
+
+        Log.d(TAG, "run, bye bye");
     }
 
     public void stopThread() {

@@ -79,6 +79,8 @@ public class AndroidWrapper : MonoBehaviour
 				// this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
 
 				this.message.text = "Listen: " + this.startListen(this.androidJavaObject);
+
+				this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
 			}
 		}
         catch (UnityException e)

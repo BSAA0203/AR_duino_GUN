@@ -130,6 +130,7 @@ public class BluetoothControl {
     public boolean disconnect() {
         try {
             if(bluetoothSocket != null && bluetoothSocket.isConnected()) {
+                breakThread();
                 bluetoothSocket.close();
                 Log.d(TAG, "disconnected successfully");
                 return true;
@@ -145,12 +146,21 @@ public class BluetoothControl {
         return false;
     }
 
+    private void breakThread() {
+        try {
+            thread.stopThread();
+            thread.join();
+            thread = null;
+        }
+        catch (Exception e) {
+            Log.e(TAG, "breakThread: " + e.getMessage());
+        }
+    }
+
     public boolean startListen() {
         try {
             if(thread != null) {
-                thread.stopThread();
-                thread.join();
-                thread = null;
+                breakThread();
             }
             thread = new BluetoothConnectionThread(bluetoothSocket, null);
             thread.start();
