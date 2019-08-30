@@ -25,6 +25,7 @@ public class BluetoothControl {
     protected Activity activity;
     private BluetoothAdapter bluetoothAdapter;
     BluetoothSocket bluetoothSocket;
+    private BluetoothConnectionThread thread;
 
     public void setActivity(Activity activity) {
         this.activity = activity;
@@ -140,6 +141,23 @@ public class BluetoothControl {
         }
         catch (Exception e) {
             Log.d(TAG, "disconnect: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean startListen() {
+        try {
+            if(thread != null) {
+                thread.stopThread();
+                thread.join();
+                thread = null;
+            }
+            thread = new BluetoothConnectionThread(bluetoothSocket, null);
+            thread.start();
+            return true;
+        }
+        catch (Exception e) {
+            Log.e(TAG, "startListen: " + e.getMessage());
         }
         return false;
     }

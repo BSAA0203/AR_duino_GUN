@@ -76,7 +76,9 @@ public class AndroidWrapper : MonoBehaviour
 				this.message.text = "Test connect result: " + this.testConnectToTarget(this.androidJavaObject, "98:D3:51:F9:4C:63");
 
 				this.message.text = "Connect: " + this.connectToTarget(this.androidJavaObject, "98:D3:51:F9:4C:63");
-				this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
+				// this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
+
+				this.message.text = "Listen: " + this.startListen(this.androidJavaObject);
 			}
 		}
         catch (UnityException e)
@@ -115,6 +117,10 @@ public class AndroidWrapper : MonoBehaviour
 
 	bool disconnect(AndroidJavaObject activity) {
 		return activity.Call<bool>("disconnect");
+	}
+
+	bool startListen(AndroidJavaObject activity) {
+		return activity.Call<bool>("startListen");
 	}
 
     // Update is called once per frame
