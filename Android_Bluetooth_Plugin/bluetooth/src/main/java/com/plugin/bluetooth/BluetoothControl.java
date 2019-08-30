@@ -112,7 +112,9 @@ public class BluetoothControl {
 
             if(bluetoothSocket != null) {
                 bluetoothSocket.connect();
-                return bluetoothSocket.isConnected();
+                boolean status = bluetoothSocket.isConnected();
+                Log.d(TAG, "testConnectToTarget isConnected: " + status);
+                return status;
             }
             else {
                 Log.d(TAG, "connectToTarget socket is null");
