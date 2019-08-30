@@ -30,31 +30,9 @@ public class AndroidWrapper : MonoBehaviour
 
         this.androidJavaObject = GetAndroidJavaObject();
         this.androidJavaObject.Call("setActivity", activity);
-
-        this.message.text = CallInit(this.androidJavaObject);
-    }
-
-	string CallInit(AndroidJavaObject activity) {
-		return activity.Call<string>("init");
-	}
-
-	bool getAvailableDeviceBluetoothState(AndroidJavaObject activity) {
-		return activity.Call<bool>("getDeviceBluetoothState");
-	}
-
-	bool isBluetoothEnabled(AndroidJavaObject activity) {
-		return activity.Call<bool>("isBluetoothEnabled");
-	}
-
-	bool turnOnBluetooth(AndroidJavaObject activity) {
-		return activity.Call<bool>("toggleBluetooth", true);
-	}
-
-    // Update is called once per frame
-    void Update()
-    {
-        try
+		try
         {
+        	this.message.text = CallInit(this.androidJavaObject);
             if (this.message.text == "initialized")
             {
                 if (this.getAvailableDeviceBluetoothState(this.androidJavaObject))
@@ -81,5 +59,49 @@ public class AndroidWrapper : MonoBehaviour
         {
             this.message.text = e.Message;
         }
+
+		try 
+		{
+			if(bluetoothEnabled) {
+				List<PairedDeviceModel> pairedDeviceList = this.getPairedDevices(this.androidJavaObject);
+				this.message.text = "paired device list size: " + pairedDeviceList.Count;
+				if(pairedDeviceList == null) {
+					this.message.text = "Empty";
+				}
+				else {
+				this.message.text = pairedDeviceList.ToString();
+				}
+			}
+		}
+        catch (UnityException e)
+        {
+            this.message.text = e.Message;
+        }
+    }
+
+	string CallInit(AndroidJavaObject activity) {
+		return activity.Call<string>("init");
+	}
+
+	bool getAvailableDeviceBluetoothState(AndroidJavaObject activity) {
+		return activity.Call<bool>("getDeviceBluetoothState");
+	}
+
+	bool isBluetoothEnabled(AndroidJavaObject activity) {
+		return activity.Call<bool>("isBluetoothEnabled");
+	}
+
+	bool turnOnBluetooth(AndroidJavaObject activity) {
+		return activity.Call<bool>("toggleBluetooth", true);
+	}
+
+	List<PairedDeviceModel> getPairedDevices(AndroidJavaObject activity) {
+		return activity.Call<List<PairedDeviceModel>>("getPairedDevices");
+	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

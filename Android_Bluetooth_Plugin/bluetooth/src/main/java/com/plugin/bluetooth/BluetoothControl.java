@@ -2,11 +2,19 @@ package com.plugin.bluetooth;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.util.Log;
 
-public class BluetoothControl {
+import com.plugin.bluetooth.model.BluetoothDeviceModel;
+//import com.plugin.bluetooth.model.BluetoothDevices;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public class BluetoothControl {
+    private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     public static String TAG = "Bluetooth Plugin";
     public static String INIT_MSG = "initialized";
     public static int REQUEST_ENABLE_BT = 0;
@@ -42,6 +50,22 @@ public class BluetoothControl {
 
     public boolean isBluetoothEnabled() {
         return this.bluetoothAdapter != null ? this.bluetoothAdapter.isEnabled() : false;
+    }
+
+    public List<BluetoothDeviceModel> getPairedDevices() {
+        if(this.bluetoothAdapter == null || !this.bluetoothAdapter.isEnabled()) {
+            return null;
+        }
+        List<BluetoothDeviceModel> pairedDevices = new ArrayList<BluetoothDeviceModel>();
+        for(BluetoothDevice device : this.bluetoothAdapter.getBondedDevices()) {
+            BluetoothDeviceModel deviceModel = new BluetoothDeviceModel();
+            deviceModel.address = device.getAddress();
+            deviceModel.name = device.getName();
+
+            pairedDevices.add(deviceModel);
+        }
+
+        return pairedDevices;
     }
 
     public String init() {
