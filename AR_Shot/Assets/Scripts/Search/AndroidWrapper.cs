@@ -28,10 +28,10 @@ public class AndroidWrapper : MonoBehaviour {
 
 		if(this.message.text == "initialized") {
 			if(this.androidJavaObject.Call<bool>("getDeviceBluetoothState")) {
-				this.message.text = "Bluetooth not turned on";
+				this.message.text = "Bluetooth already turned on";
 			}
 			else {
-				this.message.text = "Bluetooth already turned on";
+				this.message.text = "Bluetooth not turned on";
 			}
 		}
 	}
