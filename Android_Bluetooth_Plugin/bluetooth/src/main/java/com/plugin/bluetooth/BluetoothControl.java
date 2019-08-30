@@ -3,6 +3,7 @@ package com.plugin.bluetooth;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.util.Log;
 
@@ -17,12 +18,13 @@ import java.util.UUID;
 
 public class BluetoothControl {
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    public static String TAG = "Bluetooth Plugin";
+    public static String TAG = "Unity";
     public static String INIT_MSG = "initialized";
     public static int REQUEST_ENABLE_BT = 0;
 
     protected Activity activity;
     private BluetoothAdapter bluetoothAdapter;
+    BluetoothSocket bluetoothSocket;
 
     public void setActivity(Activity activity) {
         this.activity = activity;
@@ -75,6 +77,69 @@ public class BluetoothControl {
 //        String data = pairedDevices.toString();
         Log.d(TAG, data);
         return data;
+    }
+
+    public boolean testConnectToTarget(String address) {
+        try {
+            Log.d(TAG, "testConnectToTarget connect to: " + address);
+            BluetoothDevice device = this.bluetoothAdapter.getRemoteDevice(address);
+            BluetoothSocket socket = device.createRfcommSocketToServiceRecord(BTMODULEUUID);
+
+            if(socket != null) {
+                socket.connect();
+                if(socket.isConnected()) {
+                    Log.d(TAG, "testConnectToTarget test connect success");
+                }
+                socket.close();
+                Log.d(TAG, "testConnectToTarget disconnect test connection");
+                return true;
+            }
+            else {
+                Log.d(TAG, "testConnectToTarget socket is null");
+            }
+        }
+        catch (Exception e) {
+            Log.d(TAG, "testConnectToTarget: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean connectToTarget(String address) {
+        try {
+            Log.d(TAG, "connectToTarget connect to: " + address);
+            BluetoothDevice device = this.bluetoothAdapter.getRemoteDevice(address);
+            bluetoothSocket = device.createRfcommSocketToServiceRecord(BTMODULEUUID);
+
+            if(bluetoothSocket != null) {
+                bluetoothSocket.connect();
+                return bluetoothSocket.isConnected();
+            }
+            else {
+                Log.d(TAG, "connectToTarget socket is null");
+            }
+        }
+        catch (Exception e) {
+            Log.d(TAG, "connectToTarget: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean disconnect() {
+        try {
+            if(bluetoothSocket != null && bluetoothSocket.isConnected()) {
+                bluetoothSocket.close();
+                Log.d(TAG, "disconnected successfully");
+                return true;
+            }
+            else {
+                Log.d(TAG, "something wrong with connection");
+                return false;
+            }
+        }
+        catch (Exception e) {
+            Log.d(TAG, "disconnect: " + e.getMessage());
+        }
+        return false;
     }
 
     public String init() {

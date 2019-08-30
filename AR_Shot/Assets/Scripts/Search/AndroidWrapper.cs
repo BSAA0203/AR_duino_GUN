@@ -72,6 +72,11 @@ public class AndroidWrapper : MonoBehaviour
 					pairedDeviceList.devices = new List<PairedDeviceModel>();
 				}
 				this.message.text = "Json parsed list size: " + pairedDeviceList.devices.Count;
+
+				this.message.text = "Test connect result: " + this.testConnectToTarget(this.androidJavaObject, "98:D3:51:F9:4C:63");
+
+				this.message.text = "Connect: " + this.connectToTarget(this.androidJavaObject, "98:D3:51:F9:4C:63");
+				this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
 			}
 		}
         catch (UnityException e)
@@ -98,6 +103,18 @@ public class AndroidWrapper : MonoBehaviour
 
 	string getPairedDevices(AndroidJavaObject activity) {
 		return activity.Call<string>("getPairedDevices");
+	}
+
+	bool testConnectToTarget(AndroidJavaObject activity, string address) {
+		return activity.Call<bool>("testConnectToTarget", address);
+	}
+
+	bool connectToTarget(AndroidJavaObject activity, string address) {
+		return activity.Call<bool>("connectToTarget", address);
+	}
+
+	bool disconnect(AndroidJavaObject activity) {
+		return activity.Call<bool>("disconnect");
 	}
 
     // Update is called once per frame
