@@ -7,11 +7,12 @@ public class Shot : MonoBehaviour {
 
     public GameObject explo;
     public GameObject cross;
-    public static int score = 0;
+    public static int score;
     public Text txt;
 
 	// Use this for initialization
 	void Start () {
+        score = 0;
 		
 	}
 	

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour {
 
-    float tt = 60f; // get 30sec
+    float tt = 60f; // get 60sec
     Text txt;
 
     // Use this for initialization
     void Start () {
-        txt = GetComponent<Text>(); // get text
+        txt = GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -18,7 +18,7 @@ public class Timer : MonoBehaviour {
         if (tt > 0)
             tt -= Time.deltaTime;
         else
-            SceneManager.LoadScene("End");
+            SceneManager.LoadScene("End"); // when times up
 
         txt.text = tt.ToString("N2");
 	}

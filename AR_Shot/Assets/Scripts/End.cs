@@ -13,6 +13,6 @@ public class End : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        txt.text = "Score : "+Shot.score.ToString();
+        txt.text = "Score : "+Shot.score.ToString(); // show up score
 	}
 }
