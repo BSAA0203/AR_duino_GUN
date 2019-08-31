@@ -137,6 +137,10 @@ output.json
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+## But not this file
+!classes.jar
+!AR_Shot/Assets/Plugins/Android/classes.jar
+
 # Package Files #
 *.jar
 *.war
@@ -145,6 +149,10 @@ output.json
 *.zip
 *.tar.gz
 *.rar
+
+## But not this file
+!classes.jar
+!AR_Shot/Assets/Plugins/Android/classes.jar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
