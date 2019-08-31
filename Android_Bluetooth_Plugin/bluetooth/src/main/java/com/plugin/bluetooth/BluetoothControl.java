@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 
 import com.plugin.bluetooth.model.BluetoothDeviceModel;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 public class BluetoothControl {
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    public static final int MESSAGE_READ = 0;
     public static String TAG = "Unity";
     public static String INIT_MSG = "initialized";
     public static int REQUEST_ENABLE_BT = 0;
@@ -26,6 +28,8 @@ public class BluetoothControl {
     private BluetoothAdapter bluetoothAdapter;
     BluetoothSocket bluetoothSocket;
     private BluetoothConnectionThread thread;
+    Handler handler;
+    private String lastData;
 
     public void setActivity(Activity activity) {
         this.activity = activity;
@@ -162,7 +166,7 @@ public class BluetoothControl {
             if(thread != null) {
                 breakThread();
             }
-            thread = new BluetoothConnectionThread(bluetoothSocket, null);
+            thread = new BluetoothConnectionThread(bluetoothSocket, handler);
             thread.start();
             return true;
         }
@@ -172,10 +176,30 @@ public class BluetoothControl {
         return false;
     }
 
+    public String getLastData() {
+        String tmp = lastData;
+        lastData = null;
+        return tmp;
+    }
+
     public String init() {
         Log.d(TAG, "Call by unity");
 
         this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg){
+                if(msg.what == MESSAGE_READ){
+                    String readMessage = null;
+                    try {
+                        lastData = new String((byte[]) msg.obj);
+                        Log.d(TAG, "last data set by handler: " + lastData);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
 
         return INIT_MSG;
     }

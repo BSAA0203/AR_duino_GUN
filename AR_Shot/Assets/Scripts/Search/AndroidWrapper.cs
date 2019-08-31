@@ -80,7 +80,9 @@ public class AndroidWrapper : MonoBehaviour
 
 				this.message.text = "Listen: " + this.startListen(this.androidJavaObject);
 
-				this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
+				
+
+				// this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
 			}
 		}
         catch (UnityException e)
@@ -88,6 +90,10 @@ public class AndroidWrapper : MonoBehaviour
             this.message.text = e.Message;
         }
     }
+
+	string getLastData(AndroidJavaObject activity) {
+		return activity.Call<string>("getLastData");
+	}
 
 	string CallInit(AndroidJavaObject activity) {
 		return activity.Call<string>("init");
@@ -128,6 +134,6 @@ public class AndroidWrapper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        this.message.text = "Message: " + this.getLastData(this.androidJavaObject);
     }
 }

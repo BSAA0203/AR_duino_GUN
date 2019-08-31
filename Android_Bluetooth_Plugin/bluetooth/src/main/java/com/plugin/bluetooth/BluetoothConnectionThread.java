@@ -1,11 +1,11 @@
 package com.plugin.bluetooth;
 
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 
 import java.io.InputStream;
-import java.util.logging.Handler;
 
 public class BluetoothConnectionThread extends Thread {
 
@@ -45,8 +45,8 @@ public class BluetoothConnectionThread extends Thread {
                     bytes = inputStream.read(buffer, 0, bytes); // record how many bytes we actually read
 
                     Log.d(TAG,"read data: " + (new String(buffer)));
-//                    mHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer)
-//                            .sendToTarget(); // Send the obtained bytes to the UI activity
+                    this.handler.obtainMessage(BluetoothControl.MESSAGE_READ, bytes, -1, buffer)
+                            .sendToTarget(); // Send the obtained bytes to the UI activity
                 }
                 SystemClock.sleep(100);
             }
