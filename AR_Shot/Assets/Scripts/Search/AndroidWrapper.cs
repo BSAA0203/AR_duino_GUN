@@ -9,6 +9,7 @@ public class AndroidWrapper : MonoBehaviour
     private AndroidJavaObject androidJavaObject = null;
     public Text message;
     bool bluetoothEnabled = false;
+    public bool init = false;
     AndroidJavaClass jclass;
     AndroidJavaObject activity;
 
@@ -21,9 +22,7 @@ public class AndroidWrapper : MonoBehaviour
         return androidJavaObject;
     }
 
-    // Use this for initialization
-    void Start()
-    {
+    void TestRutine() {
         // Retrieve current Android Activity from the Unity Player
         jclass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         activity = jclass.GetStatic<AndroidJavaObject>("currentActivity");
@@ -91,6 +90,82 @@ public class AndroidWrapper : MonoBehaviour
         }
     }
 
+    // Use this for initialization
+    void Start()
+    {
+        // Retrieve current Android Activity from the Unity Player
+        jclass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        activity = jclass.GetStatic<AndroidJavaObject>("currentActivity");
+        string result;
+
+        this.androidJavaObject = GetAndroidJavaObject();
+        this.androidJavaObject.Call("setActivity", activity);
+		try
+        {
+        	result = CallInit(this.androidJavaObject);
+            if (result == "initialized")
+            {
+                if (this.getAvailableDeviceBluetoothState(this.androidJavaObject))
+                {
+                    result = "Bluetooth available";
+
+                    bluetoothEnabled = this.isBluetoothEnabled(this.androidJavaObject);
+                    result = "Bluetooth enabled: " + bluetoothEnabled;
+                    if(bluetoothEnabled) {
+                    	result = "Bluetooth already turned on";
+                    }
+                    else {
+						bluetoothEnabled = this.turnOnBluetooth(this.androidJavaObject);
+                    	result = "Bluetooth force turned on";
+                    }
+                }
+                else
+                {
+                    result = "Bluetooth not available";
+                }
+            }
+        }
+        catch (UnityException e)
+        {
+            result = e.Message;
+        }
+
+		try 
+		{
+			if(bluetoothEnabled) {
+				string pairedDeviceListStr = this.getPairedDevices(this.androidJavaObject);
+				result = pairedDeviceListStr;
+				Debug.Log("paired list:" + result);
+				PairedDevicesListModel pairedDeviceList = JsonUtility.FromJson<PairedDevicesListModel>(pairedDeviceListStr);
+				Debug.Log("list?: " + (pairedDeviceList != null));
+				if(pairedDeviceList.devices == null) {
+					pairedDeviceList.devices = new List<PairedDeviceModel>();
+				}
+				result = "Json parsed list size: " + pairedDeviceList.devices.Count;
+
+				result = "Test connect result: " + this.testConnectToTarget(this.androidJavaObject, "98:D3:51:F9:4C:63");
+
+				result = "Connect: " + this.connectToTarget(this.androidJavaObject, "98:D3:51:F9:4C:63");
+				// this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
+
+				result = "Listen: " + this.startListen(this.androidJavaObject);
+
+				
+
+				// this.message.text = "Disconnect: " + this.disconnect(this.androidJavaObject);
+                init = true;
+			}
+		}
+        catch (UnityException e)
+        {
+            result = e.Message;
+        }
+    }
+
+    public string getTriggerData() {
+        return this.getLastData(this.androidJavaObject);
+    }
+
 	string getLastData(AndroidJavaObject activity) {
 		return activity.Call<string>("getLastData");
 	}
@@ -134,6 +209,6 @@ public class AndroidWrapper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.message.text = "Message: " + this.getLastData(this.androidJavaObject);
+        // this.message.text = "Message: " + this.getLastData(this.androidJavaObject);
     }
 }

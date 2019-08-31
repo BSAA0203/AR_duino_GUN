@@ -9,17 +9,23 @@ public class Shot : MonoBehaviour {
     public GameObject cross;
     public static int score;
     public Text txt;
+    AndroidWrapper androidWrapper;
+    public string triggerData;
 
 	// Use this for initialization
 	void Start () {
         score = 0;
-		
+		androidWrapper = this.GetComponent<AndroidWrapper>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		if(Input.GetKey(KeyCode.F) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
+        if(androidWrapper.init) {
+            triggerData = androidWrapper.getTriggerData().Trim();
+            Debug.Log("trigger data: " + triggerData + " compare: " + (triggerData == "shoot"));
+        }
+		if(Input.GetKey(KeyCode.F) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) ||
+            (androidWrapper.init && triggerData == "shoot"))
         {
             Debug.Log("Fire");
             RaycastHit hit;
