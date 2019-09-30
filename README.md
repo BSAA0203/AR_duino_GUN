@@ -26,4 +26,4 @@ https://github.com/google-ar/arcore-unity-sdk/releases/tag/v1.7.0
     AR core SDK
 
 # License
-This project is licensed under the MIT License - see the [AR_duino_GUN/LICENSE](LICENSE)
+This project is licensed under the Apache 2.0 License - see the [AR_duino_GUN/LICENSE](LICENSE)
