@@ -4,7 +4,7 @@
 # Prerequisites
     Unity 2018.2.18f1
     
-    Arduino Bluetooth & LEGO GUN
+    Arduino Uno and Bluetooth & LEGO GUN
 
     AR Core APP
 
